@@ -36,21 +36,19 @@ public class MemberService {
 			System.out.println("5. 회원 검색(지역)");
 			System.out.println("0. 프로그램 종료");
 			
-			System.out.println("메뉴 입력>>");
+			System.out.print("메뉴 입력>>");
 			menuNum = sc.nextInt();
 			sc.nextLine();
 			
 			switch(menuNum) {
-			case 1: break;
-			case 2: break;
+			case 1: System.out.println(singup()); break;
+			case 2: System.out.println(login()); break;
 			case 3: break;
 			case 4: break;
 			case 5: break;
 			case 0: break;
 			default : System.out.println("\n잘못 입력 하셨습니다.");
 			}
-			
-			
 		}while(menuNum != 0 );
 		
 	}
@@ -70,22 +68,22 @@ public class MemberService {
 		}
 		
 		
-		System.out.println("아이디 : ");
+		System.out.print("아이디 : ");
 		String memberId = sc.next();
 		
-		System.out.println("비밀번호 : ");
+		System.out.print("비밀번호 : ");
 		String memberPw = sc.next();
 		
-		System.out.println("비밀번호 확인 : ");
+		System.out.print("비밀번호 확인 : ");
 		String memberPw2 = sc.next();
 		
-		System.out.println("이름 : ");
+		System.out.print("이름 : ");
 		String memberName = sc.next();
 		
-		System.out.println("나이 : ");
+		System.out.print("나이 : ");
 		int memberAge = sc.nextInt();
 		
-		System.out.println("지역 : ");
+		System.out.print("지역 : ");
 		String region = sc.next();
 		
 		// 비밀번호, 비밀번호 확인 일치 시 회원가입
@@ -121,18 +119,41 @@ public class MemberService {
 	}
 	
 	public String login() {
-		
-		// 1) memberArr 배열 내 요소를 순서대로 접근하여 null이 아닌지 확인 
+		System.out.println("\n***** 로그인 *****");
+		// 1) memberArr 배열 내 요소를 순서대로 접근하여 null이 아닌지 확인
+		for(int i = 0; i < memberArr.length; i++) {
+			if(memberArr[i] == null) {
+				return "회원 가입부터 진행하십쇼";
+			}else if(memberArr[i].equals(loginMember.getMemberId()) && memberArr[i].equals(loginMember.getMemberPw())) {
 				//회원정보가 있을 경우
-				//2) 회원정보 (memberArr[i])의 아이디, 비밀번호와
-				// 입력받은 아이디, 비밀번호가 같은 획인지 확인
+				//2) 회원정보 (memberArr[i])의 아이디, 비밀번호와 // 입력받은 아이디, 비밀번호가 같은 획인지 확인
+				return loginMember.getMemberName() + "님 환영합니다!";
+			}else {
+				return "아이디 또는 비밀번호가 일치하지 않습니다";
+			}
+		}
+		return "";
+			
 						//3) 로그인 회원 정보 객체(Member)를 참조하는  변수 loginMember에
 						// 현재 접근중인 memberArr[i] 요소에 지정된 주소를 얕은 복사
 		
 		//4) 로그인 성공 / 실패 여부에 따라 결과값을 반환
-		return "";
+		
 	}
 	
+	public String selectMember() {
+		
+		
+		System.out.println("***** 회원 정보 조회 *****");
+		
+		if(loginMember == null) {
+			return "로그인 후 이용해주세요";
+		}
+		String str = "이름 : " + loginMember.getMemberName();//이름
+		str += "\n아이디 : " + loginMember.getMemberId();//아이디
+		str += "\n나이 : " + loginMember.getMemberAge();//나이
+		return str;
+	}
 	
 	
 }
